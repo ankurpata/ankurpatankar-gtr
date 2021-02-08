@@ -128,6 +128,19 @@ List of available routes:
   	}
 ```
 
+## Docker:
+
+```bash
+# run docker container in development mode
+yarn docker:dev
+
+# run docker container in production mode
+yarn docker:prod
+
+# run all tests in a docker container
+yarn docker:test
+```
+
 ## Error Handling
 
 The app has a centralized error handling mechanism.

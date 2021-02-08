@@ -46,11 +46,13 @@ describe('Getir routes', () => {
       done()
     }, 10000);
 
-    test('should return 400 error if case input is not correct.', async (done) => {
-      await request(app)
-        .post('/v1/getir/getRecords')
-        .send("Some Garbage Input Request").expect(httpStatus.OK);
-         done();
+    test('should return 400 error if case request is not correct.', async (done) => {
+      const res = await request(app)
+        .get('/v1/getir/getRecords')
+        .expect(httpStatus.NOT_FOUND);
+
+      expect(res.body.code).toEqual(httpStatus.NOT_FOUND)
+      done();
     }, 10000);
 
   });
