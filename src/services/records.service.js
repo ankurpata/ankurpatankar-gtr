@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const {User} = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const mongoUtil = require('../utils/mongoInit');
@@ -14,21 +13,21 @@ const mongoUtil = require('../utils/mongoInit');
  * @returns {Promise<QueryResult>}
  */
 const queryGetirRecords = async (filter, project) => {
-  //Get db
   let records = [];
   try {
 
-    const db = mongoUtil.getDb();
+    //Get db
+    const db = await mongoUtil.getDb();
+
+    //Fetch Records
     records = await db
       .collection('records')
       .aggregate([{$project: project}, {$match: filter}])
       .toArray();
-
   } catch (e) {
-    throw new ApiError(httpStatus.BAD_REQUEST, e.message);
-    console.error(e.message, "---Error @queryGetirRecords----");
+    console.log(e.message , "@queryGetirRecords@")
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, e.message);
   }
-
   return records;
 }
 

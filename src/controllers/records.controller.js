@@ -10,67 +10,65 @@ const {recordsService} = require('../services');
  * @type {function(*=, *=, *=): void}
  */
 const getRecords = catchAsync(async (req, res) => {
-  try {
 
+  const {
+    startDate,
+    endDate,
+    minCount,
+    maxCount
+  } = req.body;
 
-    const {
-      startDate,
-      endDate,
-      minCount,
-      maxCount
-    } = req.body;
-
-    let selector = {};
-    if (startDate) {
-      selector = {
-        ...selector,
-        "createdAt": {
-          $gte: new Date(startDate)
-        }
-      };
-    }
-    if (endDate) {
-      selector = {
-        ...selector,
-        "createdAt": {
-          ...selector["createdAt"],
-          $lte: new Date(endDate)
-        }
-      };
-    }
-
-    if (minCount) {
-      selector = {
-        ...selector,
-        "totalCount": {
-          $gte: minCount
-        }
+  let selector = {};
+  if (startDate) {
+    selector = {
+      ...selector,
+      "createdAt": {
+        $gte: new Date(startDate)
       }
-    }
-
-    if (maxCount) {
-      selector = {
-        ...selector,
-        "totalCount": {
-          ...selector["totalCount"],
-          $lte: maxCount
-        }
+    };
+  }
+  if (endDate) {
+    selector = {
+      ...selector,
+      "createdAt": {
+        ...selector["createdAt"],
+        $lte: new Date(endDate)
       }
-    }
-
-    const project = {
-      totalCount: {$sum: "$counts"},
-      createdAt: 1,
-      key: 1
-    }
-
-    const result = await recordsService.queryGetirRecords(selector, project);
-    if (result)
-      res.send(result);
-  } catch (e) {
-    // re.send({})
+    };
   }
 
+  if (minCount) {
+    selector = {
+      ...selector,
+      "totalCount": {
+        $gte: minCount
+      }
+    }
+  }
+
+  if (maxCount) {
+    selector = {
+      ...selector,
+      "totalCount": {
+        ...selector["totalCount"],
+        $lte: maxCount
+      }
+    }
+  }
+
+  const project = {
+    totalCount: {$sum: "$counts"},
+    createdAt: 1,
+    key: 1,
+    _id: 0
+  }
+
+  const result = await recordsService.queryGetirRecords(selector, project);
+  res.send({
+    code: 0,
+    msg: "Success",
+    records: result
+  });
 
 });
 

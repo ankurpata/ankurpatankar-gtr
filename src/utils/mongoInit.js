@@ -11,6 +11,7 @@ module.exports = {
       useUnifiedTopology: true,
       useNewUrlParser: true
     };
+
     MongoClient.connect(process.env.MONGODB_URL, options, function (err, client) {
       if (err) {
         logger.error(`Failed to connect to the database. ${err.stack}`);
@@ -23,7 +24,30 @@ module.exports = {
     });
   },
 
-  getDb: function () {
+
+  connectToServerAsync: async function () {
+    const options = {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    };
+
+    const client = await MongoClient.connect(process.env.MONGODB_URL, options).catch(err => {
+      console.log(err);
+    });
+
+    logger.info('Connected to MongoDB');
+    _db = client?.db();
     return _db;
+
+  },
+
+
+  getDb: async function () {
+    if (!_db) {
+      await this.connectToServerAsync();
+      return _db;
+    } else {
+      return _db;
+    }
   }
 };
