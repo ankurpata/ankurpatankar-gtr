@@ -127,6 +127,10 @@ List of available routes:
         "maxCount": 170
   	}
 ```
+## Deployed Api URL on Heroku
+```bash
+https://warm-taiga-95023.herokuapp.com/v1/getir/getRecords
+```
 
 ## Docker:
 
