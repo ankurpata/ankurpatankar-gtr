@@ -1,21 +1,10 @@
 const express = require('express');
-const authRoute = require('./auth.route');
-const userRoute = require('./user.route');
-const docsRoute = require('./docs.route');
 const getirRoute = require('./getir.route');
 const config = require('../../config/config');
 
 const router = express.Router();
 
 const defaultRoutes = [
-  {
-    path: '/auth',
-    route: authRoute,
-  },
-  {
-    path: '/users',
-    route: userRoute,
-  },
   {
     path: '/getir',
     route: getirRoute,
@@ -25,8 +14,8 @@ const defaultRoutes = [
 const devRoutes = [
   // routes available only in development mode
   {
-    path: '/docs',
-    route: docsRoute,
+    path: '/getir',
+    route: getirRoute,
   },
 ];
 
