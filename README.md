@@ -11,9 +11,12 @@ provided MongoDB collection and return the results in the requested format.
    - The application should be deployed on AWS or Heroku. You don’t need to use any
    API Gateway, Load Balancers or any other layer than the developed application.
    - The up to date repo should be publicly available in Github, Bitbucket or equivalent.
+   - More requirements attached in the PDF.
 
-## For more Requirements
-  - Please find attached pdf.
+## Deployed Api URL on Heroku
+```bash
+https://warm-taiga-95023.herokuapp.com/v1/getir/getRecords
+```
 
 ## Setup & Installation
 To create a project, simply run:
@@ -126,10 +129,6 @@ List of available routes:
         "minCount": 27,
         "maxCount": 170
   	}
-```
-## Deployed Api URL on Heroku
-```bash
-https://warm-taiga-95023.herokuapp.com/v1/getir/getRecords
 ```
 
 ## Docker:
